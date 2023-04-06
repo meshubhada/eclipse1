@@ -1,0 +1,75 @@
+package StepDefinition;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class testc1 {
+	WebDriver driver;
+		
+		
+		@Given("Launch the URL")
+		
+		public void launch_the_url() {
+		    // Write code here that turns the phrase above into concrete actions
+			
+			String url="https://demo.opencart.com/";
+			WebDriverManager.edgedriver();
+			WebDriver driver=new EdgeDriver();
+			driver.get(url);
+			
+			
+		    throw new io.cucumber.java.PendingException();
+		}
+
+		@And("Navigate the login page")
+		
+		public void navigate_the_login_page() {
+		    // Write code here that turns the phrase above into concrete actions
+			
+			WebElement search=driver.findElement(By.name("q"));	
+			
+			driver.findElement(By.linkText("My Account")).click();
+			driver.findElement(By.linkText("Login")).click();
+			
+		    throw new io.cucumber.java.PendingException();
+		}
+
+		@And("enter the username and password")
+		public void enter_the_username_and_password() {
+		    // Write code here that turns the phrase above into concrete actions
+			
+			driver.findElement(By.id("input-email")).sendKeys("abc@gmail.com");
+			driver.findElement(By.id("input-password")).sendKeys("abc");
+			
+			
+		    throw new io.cucumber.java.PendingException();
+		}
+
+		@When("click on login button")
+		public void click_on_login_button() {
+		    // Write code here that turns the phrase above into concrete actions
+			
+			driver.findElement(By.xpath("//button[@type='submit']")).click();
+		    throw new io.cucumber.java.PendingException();
+		}
+
+		@Then("I validate the outcomes")
+		public void i_validate_the_outcomes() {
+		    // Write code here that turns the phrase above into concrete actions
+			
+			System.out.println("login successfull");
+		    throw new io.cucumber.java.PendingException();
+		}
+
+		
+
+	}
+

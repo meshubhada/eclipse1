@@ -1,0 +1,111 @@
+package com.jiosavan.testcases;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.Duration;
+import java.util.Properties;
+
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.support.PageFactory;
+
+//import org.bouncycastle.util.Properties;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+
+
+import com.jiosavan.pageobject.pagefactory_jiosavan;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+
+
+public class TestCase_PageFactory_JioSavan {
+
+	public static void main(String[] args) throws IOException, InterruptedException
+	{
+		//String it;
+		
+		// TODO Auto-generated method stub
+		
+		String projectpath=System.getProperty("users.dir");
+		
+		ExtentReports extent=new ExtentReports();
+		
+		ExtentSparkReporter spark=new ExtentSparkReporter(projectpath+"\\Reports\\songplay.html");
+		extent.attachReporter(spark);
+		
+		//ExtentXReporter spark=new ExtentXReporter(projectpath+"");
+		
+		//extent.attachReporter(spark);
+		
+		
+		ExtentTest test=extent.createTest("play song");
+		
+		String propertypath="C:\\Users\\Administrator\\eclipse-workspace\\jiosavan\\src\\test\\java\\com\\jiosavan\\testdata\\input.properties";
+		propertypath=propertypath.trim();
+		
+		InputStream input=new FileInputStream(propertypath);
+		
+		Properties p = new Properties();
+		p.load(input);
+		
+		String url=p.getProperty("https://www.jiosaavn.com/");
+		
+		File f1=new File(projectpath+"C:\\Users\\Administrator\\eclipse-workspace\\jiosavan\\src\\test\\java\\com\\jiosavan\\testdata\\jiosavan.xlsx");
+		
+		//C:\\Users\\shubh\\eclipse-workspace\\jiosavan\\
+		
+		FileInputStream fis=new FileInputStream(f1);
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFSheet sheet=workbook.getSheetAt(0);
+		int rowcount=sheet.getPhysicalNumberOfRows();
+		
+		for(int i=1;i<rowcount;i++)
+		{
+			//String username;
+			//String password;
+			
+			String input_text=sheet.getRow(i).getCell(0).getStringCellValue();
+			
+			WebDriverManager.edgedriver().setup();
+			WebDriver driver=new EdgeDriver();
+			
+			pagefactory_jiosavan obj=PageFactory.initElements(driver, pagefactory_jiosavan.class);
+			
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+	        driver.get(url);
+	        Thread.sleep(50);
+	        
+			
+			
+			obj.input_search(input_text);
+			test.pass("text is searched");
+			
+			obj.close_banner();
+			test.pass("banner closed");
+			
+			obj.select_podcast();
+			test.pass("podcast selected");
+			
+			obj.select_top_playlists();
+			test.pass("top playlists option selected");
+			
+			obj.play_song();
+			test.pass("song has played");
+			
+			
+			
+			
+		}	
+		extent.flush();
+	}
+
+}

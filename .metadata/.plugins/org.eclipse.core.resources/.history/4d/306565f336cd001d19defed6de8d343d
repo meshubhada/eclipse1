@@ -1,0 +1,26 @@
+package project01;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class program1 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		String url="https://www.google.com/";
+		WebDriverManager.edgedriver();
+		WebDriver driver=new EdgeDriver();
+		driver.get(url);
+		
+		
+		driver.findElement(By.name("q")).sendKeys("javapoint tutorials");
+		driver.findElement(By.name("q")).submit();
+		
+		
+	}
+
+}

@@ -1,0 +1,16 @@
+package runner1;
+
+import org.junit.runner.RunWith;
+
+@RunWith(Cucumber.class)
+
+@CucumberOptions(features=".//Feature/login.feature",
+glue="StepDefinition",
+dryRun=false
+monochrome=true)
+
+
+
+public class runner {
+
+}
